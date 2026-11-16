@@ -12,6 +12,7 @@ html,body{margin:0;padding:0;width:100%;min-height:100%;overflow-x:hidden;backgr
 const WIDTH=1920;
 const pages={home:{height:3800},laws:{height:3701},informate:{height:3525},contact:{height:2200}};
 const ready={};let activePage='home';let pendingPage=null;
+let breadcrumbTrail=['home'];
 function fit(key){
  const frame=document.getElementById(key+'Frame'),section=document.getElementById(key);
  const scale=document.documentElement.clientWidth/WIDTH;
@@ -29,9 +30,14 @@ function activate(key){
  // El cambio de visibilidad y altura ocurre junto, sin descargar iframes.
  Object.keys(pages).forEach(k=>{fit(k);document.getElementById(k).classList.toggle('active',k===key);});
 }
+function broadcastBreadcrumb(){
+ Object.keys(pages).forEach(key=>{
+  if(ready[key])document.getElementById(key+'Frame').contentWindow.postMessage({type:'HC_BREADCRUMB_UPDATE',trail:breadcrumbTrail},'*');
+ });
+}
 Object.keys(pages).forEach(key=>{
  const frame=document.getElementById(key+'Frame');
- frame.addEventListener('load',()=>{ready[key]=true;fit(key);if(pendingPage===key)activate(key);});
+ frame.addEventListener('load',()=>{ready[key]=true;fit(key);frame.contentWindow.postMessage({type:'HC_BREADCRUMB_UPDATE',trail:breadcrumbTrail},'*');if(pendingPage===key)activate(key);});
  fit(key);
 });
 // Positions measured from the actual InDesign export (1920px wide).
@@ -55,6 +61,18 @@ function jumpToSection(page,target){
 }
 window.addEventListener('message',event=>{
  const data=event.data;
+ if(data&&data.type==='HC_BREADCRUMB_REQUEST'){
+   event.source.postMessage({type:'HC_BREADCRUMB_UPDATE',trail:breadcrumbTrail},'*');
+   return;
+ }
+ if(data&&data.type==='HC_BREADCRUMB_NAVIGATE'&&pages[data.page]){
+   if(Number.isInteger(data.index)&&breadcrumbTrail[data.index]===data.page){
+     breadcrumbTrail=breadcrumbTrail.slice(0,data.index+1);
+   }
+   activate(data.page);
+   broadcastBreadcrumb();
+   return;
+ }
  if(!data||data.type!=='HC_NAVIGATE'||!pages[data.page])return;
  // Older duplicated InDesign handlers also send an untargeted navigation
  // after a hand click. Do not let those messages reset the scroll to top.
@@ -63,7 +81,9 @@ window.addEventListener('message',event=>{
    lastDeepLinkAt=Date.now();
    pendingDeepLink={page:data.page,target:data.target};
  }
+ if(breadcrumbTrail[breadcrumbTrail.length-1]!==data.page)breadcrumbTrail.push(data.page);
  activate(data.page);
+ broadcastBreadcrumb();
  if(pendingDeepLink&&activePage===pendingDeepLink.page){
    jumpToSection(pendingDeepLink.page,pendingDeepLink.target);
    pendingDeepLink=null;

@@ -172,7 +172,7 @@
 				</div>
 				<div id="_idContainer052">
 					<div style="width:0px;height:0px;position:absolute;top:0px;left:0px;-webkit-transform-origin: 0% 0%; -webkit-transform: translate(0px,4.26px) rotate(0deg) scale(0.05);transform-origin: 0% 0%; transform: translate(0px,4.26px) rotate(0deg) scale(0.05);">
-						<p class="P-rrafo-b-sico ParaOverride-1"><span id="_idTextSpan010" class="CharOverride-3" style="position:absolute;top:50px;left:1193.56px;letter-spacing:-1.26px;">Explora</span></p>
+						<p class="P-rrafo-b-sico ParaOverride-1"><span id="_idTextSpan010" class="CharOverride-3" style="position:absolute;top:50px;left:1193.56px;letter-spacing:-1.26px;">Infórmate</span></p>
 					</div>
 				</div>
 				<div id="_idContainer053">
@@ -430,12 +430,25 @@
  const spans=Array.from(document.querySelectorAll('span'));
  const links=spans.filter(el=>names[normalized(el)]);
  const css=document.createElement('style');
- css.textContent='.hc-nav-link{cursor:pointer!important}.hc-nav-link:hover{outline:3px solid #528761!important;outline-offset:5px!important;border-radius:5px!important}.hc-nav-active{outline:3px solid #528761!important;outline-offset:5px!important;border-radius:5px!important}.hc-logo-link{cursor:pointer!important}.hc-logo-link:hover{outline:3px solid #528761!important;outline-offset:5px!important;border-radius:8px!important}';
+ css.textContent='.hc-nav-link{cursor:pointer!important}.hc-header-nav-link:hover{outline:100px solid #528761!important;outline-offset:50px!important;border-radius:8px!important}.hc-nav-active{outline:100px solid #528761!important;outline-offset:50px!important;border-radius:8px!important}.hc-logo-link{cursor:pointer!important}.hc-logo-link:hover{outline:4px solid #528761!important;outline-offset:8px!important;border-radius:8px!important}';
  document.head.appendChild(css);
  links.forEach(el=>{
-   el.classList.add('hc-nav-link');
+   el.classList.add('hc-nav-link');if(el.getBoundingClientRect().top<150)el.classList.add('hc-header-nav-link');
    el.addEventListener('click',e=>{e.preventDefault();e.stopPropagation();navigate(names[normalized(el)]);});
  });
+  function alignHeaderMenu(){
+   const targetPositions={contexto:{x:1205.89,y:60.99},'infórmate':{x:1459.80,y:60.99},contacto:{x:1737.47,y:60.99}};
+   links.forEach(el=>{
+     if(!el.classList.contains('hc-header-nav-link'))return;
+     const target=targetPositions[normalized(el)];
+     if(!target)return;
+     el.style.transform='none';
+     const rect=el.getBoundingClientRect();
+     el.style.transform='translate('+((target.x-rect.left)*20)+'px, '+((target.y-rect.top)*20)+'px)';
+   });
+ }
+ alignHeaderMenu();
+ window.addEventListener('load',alignHeaderMenu,{once:true});
  // Highlight only the selected HEADER navigation item, not footer links.
  const label=ACTIVE==='laws'?'contexto':ACTIVE==='informate'?'infórmate':ACTIVE==='contact'?'contacto':null;
  if(label){const found=links.filter(el=>normalized(el)===label).sort((a,b)=>a.getBoundingClientRect().top-b.getBoundingClientRect().top)[0];if(found)found.classList.add('hc-nav-active');}
@@ -514,12 +527,25 @@
  const spans=Array.from(document.querySelectorAll('span'));
  const links=spans.filter(el=>names[normalized(el)]);
  const css=document.createElement('style');
- css.textContent='.hc-nav-link{cursor:pointer!important}.hc-nav-link:hover{outline:3px solid #528761!important;outline-offset:5px!important;border-radius:5px!important}.hc-nav-active{outline:3px solid #528761!important;outline-offset:5px!important;border-radius:5px!important}.hc-logo-link{cursor:pointer!important}.hc-logo-link:hover{outline:3px solid #528761!important;outline-offset:5px!important;border-radius:8px!important}';
+ css.textContent='.hc-nav-link{cursor:pointer!important}.hc-header-nav-link:hover{outline:100px solid #528761!important;outline-offset:50px!important;border-radius:8px!important}.hc-nav-active{outline:100px solid #528761!important;outline-offset:50px!important;border-radius:8px!important}.hc-logo-link{cursor:pointer!important}.hc-logo-link:hover{outline:4px solid #528761!important;outline-offset:8px!important;border-radius:8px!important}';
  document.head.appendChild(css);
  links.forEach(el=>{
-   el.classList.add('hc-nav-link');
+   el.classList.add('hc-nav-link');if(el.getBoundingClientRect().top<150)el.classList.add('hc-header-nav-link');
    el.addEventListener('click',e=>{e.preventDefault();e.stopPropagation();navigate(names[normalized(el)]);});
  });
+  function alignHeaderMenu(){
+   const targetPositions={contexto:{x:1205.89,y:60.99},'infórmate':{x:1459.80,y:60.99},contacto:{x:1737.47,y:60.99}};
+   links.forEach(el=>{
+     if(!el.classList.contains('hc-header-nav-link'))return;
+     const target=targetPositions[normalized(el)];
+     if(!target)return;
+     el.style.transform='none';
+     const rect=el.getBoundingClientRect();
+     el.style.transform='translate('+((target.x-rect.left)*20)+'px, '+((target.y-rect.top)*20)+'px)';
+   });
+ }
+ alignHeaderMenu();
+ window.addEventListener('load',alignHeaderMenu,{once:true});
  // Highlight only the selected HEADER navigation item, not footer links.
  const label=ACTIVE==='laws'?'contexto':ACTIVE==='informate'?'infórmate':ACTIVE==='contact'?'contacto':null;
  if(label){const found=links.filter(el=>normalized(el)===label).sort((a,b)=>a.getBoundingClientRect().top-b.getBoundingClientRect().top)[0];if(found)found.classList.add('hc-nav-active');}
@@ -554,7 +580,7 @@
 (function(){
   if(window.__hcFooterLinks2026)return;
   window.__hcFooterLinks2026=true;
-  const routes={'contexto':'laws','explora':'informate','contacto':'contact'};
+  const routes={'contexto':'laws','infórmate':'informate','contacto':'contact'};
   const clean=e=>(e.textContent||'').trim().replace(/\s+/g,' ').toLowerCase();
   const send=page=>window.parent.postMessage({type:'HC_NAVIGATE',page:page},'*');
   const footerLabels=Array.from(document.querySelectorAll('span')).filter(el=>routes[clean(el)]);
@@ -606,5 +632,186 @@
   window.addEventListener('resize',position);
 })();
 </script>
-</body>
+<script>
+(function(){
+  const socialIcons=[
+    ['_idContainer063','Facebook'],
+    ['_idContainer064','Instagram'],
+    ['_idContainer065','Messenger'],
+    ['_idContainer066','WhatsApp']
+  ];
+  const shareUrl=window.parent.location.href;
+  const isPublicUrl=/^https?:$/.test(new URL(shareUrl).protocol);
+  const shareData={
+    title:'Huella Consciente',
+    text:'Suma tu voz contra la experimentación animal ♡',
+    url:shareUrl
+  };
+  const menu=document.createElement('div');
+  menu.className='hc-share-menu';
+  menu.setAttribute('role','dialog');
+  menu.setAttribute('aria-label','Compartir Huella Consciente');
+  menu.style.cssText='position:absolute;display:none;z-index:2147483647;width:300px;padding:18px;background:#fff3e4;color:#837556;border:2px solid #528761;border-radius:12px;box-shadow:0 6px 20px rgba(0,0,0,.2);font:600 16px Quicksand,sans-serif;';
+  menu.innerHTML='<strong style="display:block;margin-bottom:12px">Comparte Huella Consciente</strong>';
+  document.body.appendChild(menu);
+  function closeMenu(){
+    menu.style.display='none';
+    document.removeEventListener('keydown',onMenuKeydown);
+  }
+  function onMenuKeydown(event){
+    if(event.key==='Escape')closeMenu();
+  }
+  function addAction(label,action){
+    const button=document.createElement('button');
+    button.type='button';
+    button.textContent=label;
+    button.style.cssText='display:block;width:100%;margin-top:8px;padding:10px 12px;border:1px solid #528761;border-radius:8px;background:#fff;color:#526b56;text-align:left;font:inherit;cursor:pointer;';
+    button.addEventListener('click',action);
+    menu.appendChild(button);
+  }
+  addAction('Compartir…',async()=>{
+    if(!navigator.share||!isPublicUrl){
+      alert(isPublicUrl?'Tu navegador no permite compartir desde esta página.':'Para compartir, abre la página desde su dirección pública.');
+      return;
+    }
+    try{
+      await navigator.share(shareData);
+      closeMenu();
+    }catch(error){
+      if(error.name!=='AbortError'){
+        console.error('No se pudo compartir Huella Consciente.',error);
+        alert('No se pudo abrir el menú para compartir.');
+      }
+    }
+  });
+  addAction('WhatsApp',()=>{
+    if(!isPublicUrl){
+      alert('WhatsApp necesita la dirección pública de la página. Abre el sitio publicado e inténtalo de nuevo.');
+      return;
+    }
+    window.open('https://wa.me/?text='+encodeURIComponent(shareData.text+' '+shareUrl),'_blank','noopener,noreferrer');
+    closeMenu();
+  });
+  addAction('Facebook',()=>{
+    if(!isPublicUrl){
+      alert('Facebook necesita la dirección pública de la página. Abre el sitio publicado e inténtalo de nuevo.');
+      return;
+    }
+    window.open('https://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent(shareUrl),'_blank','noopener,noreferrer');
+    closeMenu();
+  });
+  addAction('Copiar enlace',async()=>{
+    try{
+      let copied=false;
+      if(navigator.clipboard&&navigator.clipboard.writeText){
+        try{
+          await navigator.clipboard.writeText(shareUrl);
+          copied=true;
+        }catch(error){
+          console.warn('El portapapeles moderno no está disponible; se intentará el método alternativo.',error);
+        }
+      }
+      if(!copied){
+        const input=document.createElement('textarea');
+        input.value=shareUrl;
+        input.style.cssText='position:fixed;left:-9999px;top:0;';
+        document.body.appendChild(input);
+        input.select();
+        copied=document.execCommand('copy');
+        input.remove();
+      }
+      if(!copied)throw new Error('El navegador no permitió copiar el enlace.');
+      alert('Enlace copiado.');
+      closeMenu();
+    }catch(error){
+      console.error('No se pudo copiar el enlace.',error);
+      alert('No se pudo copiar el enlace en este navegador.');
+    }
+  });
+  document.addEventListener('click',event=>{
+    if(menu.style.display!=='none'&&!menu.contains(event.target)&&!socialIcons.some(([id])=>document.getElementById(id)?.contains(event.target)))closeMenu();
+  });
+  socialIcons.forEach(([id,network])=>{
+    const icon=document.getElementById(id);
+    if(!icon)return;
+    icon.setAttribute('role','button');
+    icon.setAttribute('tabindex','0');
+    icon.setAttribute('aria-label','Compartir por '+network);
+    icon.title='Compartir por '+network;
+    icon.style.cursor='pointer';
+    function openMenu(event){
+      event.preventDefault();
+      event.stopPropagation();
+      const rect=icon.getBoundingClientRect();
+      menu.style.left=(rect.left+window.scrollX)+'px';
+      menu.style.top=(rect.bottom+window.scrollY+12)+'px';
+      menu.style.display='block';
+      document.addEventListener('keydown',onMenuKeydown);
+      menu.querySelector('button')?.focus();
+    }
+    icon.addEventListener('click',openMenu);
+    icon.addEventListener('keydown',event=>{
+      if(event.key==='Enter'||event.key===' '){
+        openMenu(event);
+      }
+    });
+  });
+})();
+</script>
+<script>
+(function(){
+  if(window.__hcBreadcrumbs)return;
+  window.__hcBreadcrumbs=true;
+  const page='contact';
+  const labels={home:'Inicio',laws:'Contexto',informate:'Infórmate',contact:'Contacto'};
+  const nav=document.createElement('nav');
+  nav.id='hc-breadcrumb';
+  nav.setAttribute('aria-label','Miga de pan');
+  nav.style.cssText='position:absolute;top:145px;left:45px;z-index:2000;font-family:Quicksand,sans-serif;font-weight:500;color:#837556;';
+  const list=document.createElement('ol');
+  list.style.cssText='list-style:none;display:flex;align-items:center;gap:10px;margin:0;padding:0;';
+  function addSeparator(){
+    const item=document.createElement('li');
+    item.textContent='/';
+    item.setAttribute('aria-hidden','true');
+    item.style.cssText='color:#837556;font-size:14px;font-weight:500;';
+    list.appendChild(item);
+  }
+  function renderTrail(trail){
+    list.replaceChildren();
+    trail.forEach((key,index)=>{
+      if(index)addSeparator();
+      const item=document.createElement('li');
+      item.style.cssText='display:flex;align-items:center;font-size:15px;font-weight:500;color:#837556;';
+      if(index===trail.length-1){
+        item.textContent=labels[key];
+        item.setAttribute('aria-current','page');
+      }else{
+        const link=document.createElement('a');
+        link.href='#'+key;
+        link.textContent=labels[key];
+        link.className='breadcrumb-link';
+        link.style.cssText='color:#837556;font-weight:500;text-decoration:none;transition:opacity .2s ease;';
+        link.addEventListener('mouseenter',()=>{link.style.opacity='.75';link.style.textDecoration='underline';});
+        link.addEventListener('mouseleave',()=>{link.style.opacity='1';link.style.textDecoration='none';});
+        link.addEventListener('click',event=>{
+          event.preventDefault();
+          event.stopPropagation();
+          window.parent.postMessage({type:'HC_BREADCRUMB_NAVIGATE',page:key,index:index},'*');
+        });
+        item.appendChild(link);
+      }
+      list.appendChild(item);
+    });
+  }
+  nav.appendChild(list);
+  document.body.appendChild(nav);
+  renderTrail([page]);
+  window.addEventListener('message',event=>{
+    const data=event.data;
+    if(data&&data.type==='HC_BREADCRUMB_UPDATE'&&Array.isArray(data.trail)&&data.trail.every(key=>labels[key]))renderTrail(data.trail);
+  });
+  window.parent.postMessage({type:'HC_BREADCRUMB_REQUEST'},'*');
+})();
+</script></body>
 </html>

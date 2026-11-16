@@ -182,7 +182,7 @@
 					</div>
 					<div id="_idContainer054">
 						<div style="width:0px;height:0px;position:absolute;top:0px;left:0px;-webkit-transform-origin: 0% 0%; -webkit-transform: translate(0px,4.26px) rotate(0deg) scale(0.05);transform-origin: 0% 0%; transform: translate(0px,4.26px) rotate(0deg) scale(0.05);">
-							<p class="P-rrafo-b-sico ParaOverride-1"><span id="_idTextSpan012" class="CharOverride-4" style="position:absolute;top:50px;left:1195.54px;letter-spacing:-1.26px;">Explora</span></p>
+							<p class="P-rrafo-b-sico ParaOverride-1"><span id="_idTextSpan012" class="CharOverride-4" style="position:absolute;top:50px;left:1195.54px;letter-spacing:-1.26px;">Infórmate</span></p>
 						</div>
 					</div>
 					<div id="_idContainer055">
@@ -460,12 +460,25 @@
  const spans=Array.from(document.querySelectorAll('span'));
  const links=spans.filter(el=>names[normalized(el)]);
  const css=document.createElement('style');
- css.textContent='.hc-nav-link{cursor:pointer!important}.hc-nav-link:hover{outline:3px solid #528761!important;outline-offset:5px!important;border-radius:5px!important}.hc-nav-active{outline:3px solid #528761!important;outline-offset:5px!important;border-radius:5px!important}.hc-logo-link{cursor:pointer!important}.hc-logo-link:hover{outline:3px solid #528761!important;outline-offset:5px!important;border-radius:8px!important}';
+ css.textContent='.hc-nav-link{cursor:pointer!important}.hc-header-nav-link:hover{outline:100px solid #528761!important;outline-offset:50px!important;border-radius:8px!important}.hc-nav-active{outline:100px solid #528761!important;outline-offset:50px!important;border-radius:8px!important}.hc-logo-link{cursor:pointer!important}.hc-logo-link:hover{outline:4px solid #528761!important;outline-offset:8px!important;border-radius:8px!important}';
  document.head.appendChild(css);
  links.forEach(el=>{
-   el.classList.add('hc-nav-link');
+   el.classList.add('hc-nav-link');if(el.getBoundingClientRect().top<150)el.classList.add('hc-header-nav-link');
    el.addEventListener('click',e=>{e.preventDefault();e.stopPropagation();navigate(names[normalized(el)]);});
  });
+  function alignHeaderMenu(){
+   const targetPositions={contexto:{x:1205.89,y:60.99},'infórmate':{x:1459.80,y:60.99},contacto:{x:1737.47,y:60.99}};
+   links.forEach(el=>{
+     if(!el.classList.contains('hc-header-nav-link'))return;
+     const target=targetPositions[normalized(el)];
+     if(!target)return;
+     el.style.transform='none';
+     const rect=el.getBoundingClientRect();
+     el.style.transform='translate('+((target.x-rect.left)*20)+'px, '+((target.y-rect.top)*20)+'px)';
+   });
+ }
+ alignHeaderMenu();
+ window.addEventListener('load',alignHeaderMenu,{once:true});
  // Highlight only the selected HEADER navigation item, not footer links.
  const label=ACTIVE==='laws'?'contexto':ACTIVE==='informate'?'infórmate':ACTIVE==='contact'?'contacto':null;
  if(label){const found=links.filter(el=>normalized(el)===label).sort((a,b)=>a.getBoundingClientRect().top-b.getBoundingClientRect().top)[0];if(found)found.classList.add('hc-nav-active');}
@@ -804,12 +817,25 @@
  const spans=Array.from(document.querySelectorAll('span'));
  const links=spans.filter(el=>names[normalized(el)]);
  const css=document.createElement('style');
- css.textContent='.hc-nav-link{cursor:pointer!important}.hc-nav-link:hover{outline:3px solid #528761!important;outline-offset:5px!important;border-radius:5px!important}.hc-nav-active{outline:3px solid #528761!important;outline-offset:5px!important;border-radius:5px!important}.hc-logo-link{cursor:pointer!important}.hc-logo-link:hover{outline:3px solid #528761!important;outline-offset:5px!important;border-radius:8px!important}';
+ css.textContent='.hc-nav-link{cursor:pointer!important}.hc-header-nav-link:hover{outline:100px solid #528761!important;outline-offset:50px!important;border-radius:8px!important}.hc-nav-active{outline:100px solid #528761!important;outline-offset:50px!important;border-radius:8px!important}.hc-logo-link{cursor:pointer!important}.hc-logo-link:hover{outline:4px solid #528761!important;outline-offset:8px!important;border-radius:8px!important}';
  document.head.appendChild(css);
  links.forEach(el=>{
-   el.classList.add('hc-nav-link');
+   el.classList.add('hc-nav-link');if(el.getBoundingClientRect().top<150)el.classList.add('hc-header-nav-link');
    el.addEventListener('click',e=>{e.preventDefault();e.stopPropagation();navigate(names[normalized(el)]);});
  });
+  function alignHeaderMenu(){
+   const targetPositions={contexto:{x:1205.89,y:60.99},'infórmate':{x:1459.80,y:60.99},contacto:{x:1737.47,y:60.99}};
+   links.forEach(el=>{
+     if(!el.classList.contains('hc-header-nav-link'))return;
+     const target=targetPositions[normalized(el)];
+     if(!target)return;
+     el.style.transform='none';
+     const rect=el.getBoundingClientRect();
+     el.style.transform='translate('+((target.x-rect.left)*20)+'px, '+((target.y-rect.top)*20)+'px)';
+   });
+ }
+ alignHeaderMenu();
+ window.addEventListener('load',alignHeaderMenu,{once:true});
  // Highlight only the selected HEADER navigation item, not footer links.
  const label=ACTIVE==='laws'?'contexto':ACTIVE==='informate'?'infórmate':ACTIVE==='contact'?'contacto':null;
  if(label){const found=links.filter(el=>normalized(el)===label).sort((a,b)=>a.getBoundingClientRect().top-b.getBoundingClientRect().top)[0];if(found)found.classList.add('hc-nav-active');}
@@ -1183,12 +1209,25 @@
  const spans=Array.from(document.querySelectorAll('span'));
  const links=spans.filter(el=>names[normalized(el)]);
  const css=document.createElement('style');
- css.textContent='.hc-nav-link{cursor:pointer!important}.hc-nav-link:hover{outline:3px solid #528761!important;outline-offset:5px!important;border-radius:5px!important}.hc-nav-active{outline:3px solid #528761!important;outline-offset:5px!important;border-radius:5px!important}.hc-logo-link{cursor:pointer!important}.hc-logo-link:hover{outline:3px solid #528761!important;outline-offset:5px!important;border-radius:8px!important}';
+ css.textContent='.hc-nav-link{cursor:pointer!important}.hc-header-nav-link:hover{outline:100px solid #528761!important;outline-offset:50px!important;border-radius:8px!important}.hc-nav-active{outline:100px solid #528761!important;outline-offset:50px!important;border-radius:8px!important}.hc-logo-link{cursor:pointer!important}.hc-logo-link:hover{outline:4px solid #528761!important;outline-offset:8px!important;border-radius:8px!important}';
  document.head.appendChild(css);
  links.forEach(el=>{
-   el.classList.add('hc-nav-link');
+   el.classList.add('hc-nav-link');if(el.getBoundingClientRect().top<150)el.classList.add('hc-header-nav-link');
    el.addEventListener('click',e=>{e.preventDefault();e.stopPropagation();navigate(names[normalized(el)]);});
  });
+  function alignHeaderMenu(){
+   const targetPositions={contexto:{x:1205.89,y:60.99},'infórmate':{x:1459.80,y:60.99},contacto:{x:1737.47,y:60.99}};
+   links.forEach(el=>{
+     if(!el.classList.contains('hc-header-nav-link'))return;
+     const target=targetPositions[normalized(el)];
+     if(!target)return;
+     el.style.transform='none';
+     const rect=el.getBoundingClientRect();
+     el.style.transform='translate('+((target.x-rect.left)*20)+'px, '+((target.y-rect.top)*20)+'px)';
+   });
+ }
+ alignHeaderMenu();
+ window.addEventListener('load',alignHeaderMenu,{once:true});
  // Highlight only the selected HEADER navigation item, not footer links.
  const label=ACTIVE==='laws'?'contexto':ACTIVE==='informate'?'infórmate':ACTIVE==='contact'?'contacto':null;
  if(label){const found=links.filter(el=>normalized(el)===label).sort((a,b)=>a.getBoundingClientRect().top-b.getBoundingClientRect().top)[0];if(found)found.classList.add('hc-nav-active');}
@@ -1223,7 +1262,7 @@
 (function(){
   if(window.__hcFooterLinks2026)return;
   window.__hcFooterLinks2026=true;
-  const routes={'contexto':'laws','explora':'informate','contacto':'contact'};
+  const routes={'contexto':'laws','infórmate':'informate','contacto':'contact'};
   const clean=e=>(e.textContent||'').trim().replace(/\s+/g,' ').toLowerCase();
   const send=page=>window.parent.postMessage({type:'HC_NAVIGATE',page:page},'*');
   const footerLabels=Array.from(document.querySelectorAll('span')).filter(el=>routes[clean(el)]);
@@ -1301,5 +1340,60 @@
  },true);
 })();
 </script>
-</body>
+<script>
+(function(){
+  if(window.__hcBreadcrumbs)return;
+  window.__hcBreadcrumbs=true;
+  const page='home';
+  const labels={home:'Inicio',laws:'Contexto',informate:'Infórmate',contact:'Contacto'};
+  const nav=document.createElement('nav');
+  nav.id='hc-breadcrumb';
+  nav.setAttribute('aria-label','Miga de pan');
+  nav.style.cssText='position:absolute;top:145px;left:45px;z-index:2000;font-family:Quicksand,sans-serif;font-weight:500;color:#837556;';
+  const list=document.createElement('ol');
+  list.style.cssText='list-style:none;display:flex;align-items:center;gap:10px;margin:0;padding:0;';
+  function addSeparator(){
+    const item=document.createElement('li');
+    item.textContent='/';
+    item.setAttribute('aria-hidden','true');
+    item.style.cssText='color:#837556;font-size:14px;font-weight:500;';
+    list.appendChild(item);
+  }
+  function renderTrail(trail){
+    list.replaceChildren();
+    trail.forEach((key,index)=>{
+      if(index)addSeparator();
+      const item=document.createElement('li');
+      item.style.cssText='display:flex;align-items:center;font-size:15px;font-weight:500;color:#837556;';
+      if(index===trail.length-1){
+        item.textContent=labels[key];
+        item.setAttribute('aria-current','page');
+      }else{
+        const link=document.createElement('a');
+        link.href='#'+key;
+        link.textContent=labels[key];
+        link.className='breadcrumb-link';
+        link.style.cssText='color:#837556;font-weight:500;text-decoration:none;transition:opacity .2s ease;';
+        link.addEventListener('mouseenter',()=>{link.style.opacity='.75';link.style.textDecoration='underline';});
+        link.addEventListener('mouseleave',()=>{link.style.opacity='1';link.style.textDecoration='none';});
+        link.addEventListener('click',event=>{
+          event.preventDefault();
+          event.stopPropagation();
+          window.parent.postMessage({type:'HC_BREADCRUMB_NAVIGATE',page:key,index:index},'*');
+        });
+        item.appendChild(link);
+      }
+      list.appendChild(item);
+    });
+  }
+  nav.appendChild(list);
+  document.body.appendChild(nav);
+  renderTrail([page]);
+  window.addEventListener('message',event=>{
+    const data=event.data;
+    if(data&&data.type==='HC_BREADCRUMB_UPDATE'&&Array.isArray(data.trail)&&data.trail.every(key=>labels[key]))renderTrail(data.trail);
+  });
+  window.parent.postMessage({type:'HC_BREADCRUMB_REQUEST'},'*');
+})();
+</script></body>
 </html>
